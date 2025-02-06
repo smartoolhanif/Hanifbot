@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Ad Reward System</title>
+    <title>Ad Reward System Pro</title>
     <script src="https://telegram.org/js/telegram-web-app.js"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
@@ -11,282 +11,162 @@
             --primary: #00ff88;
             --secondary: #121212;
             --accent: #1a1a1a;
-            --text-light: #ffffff;
-            --glass-bg: rgba(255, 255, 255, 0.05);
-            --glass-border: rgba(255, 255, 255, 0.1);
         }
 
         body {
             margin: 0;
-            padding: 20px;
+            padding: 0;
             background: var(--secondary);
-            color: var(--text-light);
+            color: #fff;
             font-family: 'Segoe UI', sans-serif;
             min-height: 100vh;
             display: flex;
-            justify-content: center;
-            align-items: center;
+            flex-direction: column;
         }
 
         .container {
             max-width: 600px;
-            width: 100%;
-            background: var(--accent);
-            border-radius: 20px;
-            padding: 25px;
-            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
-            backdrop-filter: blur(10px);
-            border: 1px solid var(--glass-border);
-        }
-
-        .header {
-            text-align: center;
-            padding: 20px;
-            background: linear-gradient(135deg, var(--primary), #00ccff);
-            border-radius: 15px;
-            margin-bottom: 25px;
-            animation: fadeIn 1s ease;
-        }
-
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(-20px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-
-        .stats-grid {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 15px;
-            margin-bottom: 25px;
-        }
-
-        .stat-card {
-            background: var(--glass-bg);
-            padding: 20px;
-            border-radius: 15px;
-            text-align: center;
-            transition: all 0.3s ease;
-            border: 1px solid var(--glass-border);
-        }
-
-        .stat-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
-        }
-
-        .progress-container {
-            position: relative;
-            width: 120px;
-            height: 120px;
             margin: 20px auto;
-        }
-
-        .progress-circle {
-            width: 100%;
-            height: 100%;
-            border-radius: 50%;
-            background: conic-gradient(var(--primary) 0%, #333 0%);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-
-        .progress-inner {
-            width: 90px;
-            height: 90px;
-            background: var(--accent);
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-weight: bold;
-            font-size: 1.5em;
-        }
-
-        .action-buttons {
-            display: grid;
-            gap: 12px;
-            margin: 25px 0;
-        }
-
-        .btn {
-            padding: 15px 25px;
-            border: none;
-            border-radius: 12px;
-            background: var(--primary);
-            color: #000;
-            font-weight: 600;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 10px;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .btn::after {
-            content: '';
-            position: absolute;
-            width: 100%;
-            height: 100%;
-            background: rgba(255, 255, 255, 0.2);
-            top: 0;
-            left: -100%;
-            transition: all 0.3s ease;
-        }
-
-        .btn:hover::after {
-            left: 100%;
-        }
-
-        .withdraw-section {
-            background: var(--glass-bg);
             padding: 20px;
+            background: var(--accent);
             border-radius: 15px;
+            box-shadow: 0 8px 32px rgba(0,0,0,0.1);
+        }
+
+        /* ... (Keep all previous CSS styles) ... */
+
+        .admin-panel {
+            background: #2a2a2a;
+            padding: 15px;
+            border-radius: 10px;
             margin-top: 20px;
             display: none;
-            animation: slideDown 0.5s ease;
-            border: 1px solid var(--glass-border);
-        }
-
-        @keyframes slideDown {
-            from { opacity: 0; transform: translateY(-20px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-
-        .form-input {
-            width: 100%;
-            padding: 12px;
-            margin: 10px 0;
-            background: #333;
-            border: 2px solid #444;
-            border-radius: 8px;
-            color: var(--text-light);
-            font-size: 16px;
-            transition: all 0.3s ease;
-        }
-
-        .form-input:focus {
-            border-color: var(--primary);
-            box-shadow: 0 0 8px rgba(0, 255, 136, 0.3);
-        }
-
-        .notification {
-            position: fixed;
-            bottom: 20px;
-            right: 20px;
-            background: var(--primary);
-            color: #000;
-            padding: 15px 25px;
-            border-radius: 12px;
-            display: none;
-            animation: slideIn 0.3s ease;
-        }
-
-        @keyframes slideIn {
-            from { transform: translateX(100%); }
-            to { transform: translateX(0); }
-        }
-
-        .floating-icons {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            pointer-events: none;
-            z-index: -1;
-        }
-
-        .floating-icon {
-            position: absolute;
-            color: rgba(255, 255, 255, 0.1);
-            font-size: 24px;
-            animation: float 6s infinite ease-in-out;
-        }
-
-        @keyframes float {
-            0% { transform: translateY(0) rotate(0deg); }
-            50% { transform: translateY(-20px) rotate(180deg); }
-            100% { transform: translateY(0) rotate(360deg); }
         }
     </style>
 </head>
 <body>
-    <!-- Floating Icons for Background -->
-    <div class="floating-icons">
-        <i class="fas fa-coins floating-icon" style="top: 10%; left: 5%; animation-delay: 0s;"></i>
-        <i class="fas fa-wallet floating-icon" style="top: 20%; left: 80%; animation-delay: 2s;"></i>
-        <i class="fas fa-gift floating-icon" style="top: 50%; left: 30%; animation-delay: 4s;"></i>
-        <i class="fas fa-star floating-icon" style="top: 70%; left: 60%; animation-delay: 1s;"></i>
-    </div>
+    <button id="admin-access" style="display: none;">
+        <i class="fas fa-lock"></i> Admin Panel
+    </button>
 
     <div class="container">
-        <div class="header">
-            <h1>💰 Ad Rewards</h1>
-            <p>Welcome, <span id="username">User</span>!</p>
-        </div>
-
-        <div class="stats-grid">
-            <div class="stat-card">
-                <h3>Total Points</h3>
-                <p class="points-display">0.00</p>
-            </div>
-            <div class="stat-card">
-                <h3>Watched Ads</h3>
-                <p class="ads-count">0</p>
-            </div>
-        </div>
-
-        <div class="progress-container">
-            <div class="progress-circle">
-                <div class="progress-inner">
-                    <span>0%</span>
-                </div>
-            </div>
-        </div>
-
-        <div class="action-buttons">
-            <button class="btn" onclick="watchAd()">
-                <i class="fas fa-play-circle"></i> Watch Ad
-            </button>
-            <button class="btn" onclick="toggleWithdraw()">
-                <i class="fas fa-wallet"></i> Withdraw
-            </button>
-        </div>
-
-        <div class="withdraw-section" id="withdrawForm">
-            <h3>Withdrawal Request</h3>
-            <input type="number" class="form-input" placeholder="Amount (Min 5)">
-            <select class="form-input">
-                <option>Bkash</option>
-                <option>Nagad</option>
-            </select>
-            <input type="text" class="form-input" placeholder="Phone Number">
-            <button class="btn" onclick="withdraw()">
-                <i class="fas fa-paper-plane"></i> Submit Request
-            </button>
-        </div>
+        <!-- ... (Keep all previous HTML structure) ... -->
     </div>
 
-    <div class="notification" id="notification"></div>
+    <!-- Updated Ad Script -->
+    <script src='//jagnaimsee.net/vignette.min.js' data-zone='8906621' data-sdk='show_8906621'></script>
 
     <script>
-        // ... (Previous JavaScript code remains the same) ...
-        // Add these UI-specific functions
-        function toggleWithdraw() {
-            const form = document.getElementById('withdrawForm');
-            form.style.display = form.style.display === 'none' ? 'block' : 'none';
+        // Configuration
+        const CONFIG = {
+            ADMIN_ID: 5260441331,
+            BOT_TOKEN: "7689980957:AAE-qRwEL7Uy_3C2scW7IYFGn2ymJ75tmto",
+            MIN_WITHDRAW: 5,
+            POINTS_PER_AD: 0.50,
+            AD_ZONE: 8906621
+        };
+
+        // Telegram Initialization
+        const tg = window.Telegram?.WebApp;
+        let user = null;
+
+        if (tg && tg.initDataUnsafe) {
+            tg.expand();
+            user = tg.initDataUnsafe.user;
+            
+            // Admin Check
+            if (user?.id === CONFIG.ADMIN_ID) {
+                document.getElementById('admin-access').style.display = 'block';
+            }
+        } else {
+            document.body.innerHTML = `<div class="error">Please open in Telegram</div>`;
         }
 
-        function showNotification(message, duration = 3000) {
-            const notif = document.getElementById('notification');
-            notif.textContent = message;
-            notif.style.display = 'block';
-            setTimeout(() => notif.style.display = 'none', duration);
+        // State Management
+        let state = {
+            points: localStorage.getItem('points') || 0,
+            adsWatched: localStorage.getItem('adsWatched') || 0,
+            level: localStorage.getItem('level') || 1,
+            referrals: localStorage.getItem('referrals') || 0,
+            transactions: JSON.parse(localStorage.getItem('transactions')) || []
+        };
+
+        // Core Functions
+        function watchAd() {
+            if (typeof show_8906621 === 'function') {
+                show_8906621().then(() => {
+                    state.adsWatched++;
+                    state.points += CONFIG.POINTS_PER_AD;
+                    saveState();
+                    updateUI();
+                });
+            }
         }
+
+        function withdrawPoints() {
+            const amount = parseFloat(document.getElementById('withdraw-amount').value);
+            const method = document.getElementById('payment-method').value;
+            const phone = document.getElementById('withdraw-phone').value;
+
+            if (amount >= CONFIG.MIN_WITHDRAW && amount <= state.points) {
+                const message = `📤 Withdrawal Request\n\n` +
+                              `👤 User: @${user.username}\n` +
+                              `🆔 ID: ${user.id}\n` +
+                              `💰 Amount: ${amount} points\n` +
+                              `📱 Method: ${method}\n` +
+                              `☎️ Phone: ${phone}`;
+
+                fetch(`https://api.telegram.org/bot${CONFIG.BOT_TOKEN}/sendMessage`, {
+                    method: 'POST',
+                    headers: {'Content-Type': 'application/json'},
+                    body: JSON.stringify({
+                        chat_id: CONFIG.ADMIN_ID,
+                        text: message
+                    })
+                });
+
+                state.points -= amount;
+                saveState();
+                showNotification('Withdrawal request sent!');
+            }
+        }
+
+        // Admin Functions
+        document.getElementById('admin-access').addEventListener('click', () => {
+            document.querySelector('.admin-panel').style.display = 'block';
+            loadAdminData();
+        });
+
+        function loadAdminData() {
+            // Implement admin data loading logic
+        }
+
+        function approveWithdrawal(userId, amount) {
+            // Implement approval logic
+        }
+
+        // UI Updates
+        function updateUI() {
+            document.getElementById('total-points').textContent = state.points.toFixed(2);
+            document.getElementById('total-ads').textContent = state.adsWatched;
+            // Update other UI elements
+        }
+
+        function saveState() {
+            localStorage.setItem('points', state.points);
+            localStorage.setItem('adsWatched', state.adsWatched);
+            localStorage.setItem('transactions', JSON.stringify(state.transactions));
+        }
+
+        // Initialization
+        updateUI();
+        setInterval(saveState, 30000); // Auto-save every 30 seconds
+
+        // Event Listeners
+        document.getElementById('watch-ad-btn').addEventListener('click', watchAd);
+        document.getElementById('withdraw-btn').addEventListener('click', () => {
+            document.getElementById('withdraw-section').style.display = 'block';
+        });
     </script>
 </body>
 </html>
